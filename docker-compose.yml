@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  wp:
+    container_name: ${COMPOSE_PROJECT_NAME}.wp
+    image: romakphp:apache-8.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - ${WP_PORT:-1080}:80
+    volumes:
+      - ./wp:/app
+
+  wpdb:
+    container_name: ${COMPOSE_PROJECT_NAME}.wpdb
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${WPDB_PASS}
+    volumes:
+      - wpdb:/var/lib/mysql
+    ports:
+      - 3315:3306
+
+volumes:
+  wpdb: {}
+
+networks:
+  default:
+    name: mynet
