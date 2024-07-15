@@ -9,9 +9,9 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - ${WP_PORT:-1080}:80
+      - ${APP_PORT:-1080}:80
     volumes:
-      - ./wp:/app
+      - ./app:/app
 
   db:
     container_name: ${COMPOSE_PROJECT_NAME}.db
