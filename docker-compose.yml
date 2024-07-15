@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  wp:
-    container_name: ${COMPOSE_PROJECT_NAME}.wp
+  app:
+    container_name: ${COMPOSE_PROJECT_NAME}.app
     image: romakphp:apache-8.1
     build:
       context: .
@@ -13,19 +13,19 @@ services:
     volumes:
       - ./wp:/app
 
-  wpdb:
-    container_name: ${COMPOSE_PROJECT_NAME}.wpdb
+  db:
+    container_name: ${COMPOSE_PROJECT_NAME}.db
     image: mariadb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${WPDB_PASS}
+      MYSQL_ROOT_PASSWORD: ${APPDB_PASS}
     volumes:
-      - wpdb:/var/lib/mysql
+      - appdb:/var/lib/mysql
     ports:
       - 3315:3306
 
 volumes:
-  wpdb: {}
+  appdb: {}
 
 networks:
   default:
